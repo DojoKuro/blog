@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Kur0&#39;s Blog</title>
+    <link>http://localhost:1313/categories/</link>
+    <description>Recent content in Categories on Kur0&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Feb 2022 09:47:03 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hackthebox</title>
+      <link>http://localhost:1313/categories/hackthebox/</link>
+      <pubDate>Fri, 11 Feb 2022 09:47:03 +0000</pubDate>
+      <guid>http://localhost:1313/categories/hackthebox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Writeups</title>
+      <link>http://localhost:1313/categories/writeups/</link>
+      <pubDate>Fri, 11 Feb 2022 09:47:03 +0000</pubDate>
+      <guid>http://localhost:1313/categories/writeups/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NTU STCS 2016学习笔记</title>
+      <link>http://localhost:1313/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 30 Aug 2020 12:22:52 +0000</pubDate>
+      <guid>http://localhost:1313/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

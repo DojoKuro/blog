@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Kur0&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.144.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+    
+      
+
+    
+
+    
+    
+      <link href="/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="alternate" type="application/rss+xml" title="Kur0&#39;s Blog" />
+      <link href="/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="feed" type="application/rss+xml" title="Kur0&#39;s Blog" />
+      
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/categories/ntu-stcs-2016%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+  <meta property="og:site_name" content="Kur0&#39;s Blog">
+  <meta property="og:title" content="NTU STCS 2016学习笔记">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="NTU STCS 2016学习笔记">
+  <meta itemprop="datePublished" content="2020-08-30T12:22:52+00:00">
+  <meta itemprop="dateModified" content="2020-08-30T12:22:52+00:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="NTU STCS 2016学习笔记">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+
+  <header>
+    <div class="pb3-m pb6-l bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Kur0&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv3 ph3 ph4-ns">
+        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
+          NTU STCS 2016学习笔记
+        </h1>
+        
+      </div>
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <article class="cf pa3 pa4-m pa4-l">
+    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links mid-gray">
+      <p>Below you will find pages that utilize the taxonomy term “NTU STCS 2016学习笔记”</p>
+    </div>
+  </article>
+  <div class="mw8 center">
+    <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w6/" class="link black dim">
+        NTU STCS 2016学习笔记 0x04 Format String
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="format-string">Format String</h1>
+<ul>
+<li><em>在输出火字符串处理函数中用来表示输出的字符串格式</em></li>
+<li><em>在以下的&quot;%s %d&quot;即为format string</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sprintf</span>(buffer, <span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span></code></pre></div><h2 id="format-string-vulnerablility">Format String Vulnerablility</h2>
+<ul>
+<li><em>错误的使用方式，直接将使用者的输入作为fmt使用</em></li>
+<li><em>将printf(&quot;%s&quot;, str)，写成gets(str);printf(str);</em></li>
+<li><em>此类错误不易发现，因为如果没有测试特殊input执行结果不变</em></li>
+</ul>
+<h2 id="fmt使用方式">fmt使用方式</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%2$*1$d&#34;</span>, width, num);
+</span></span></code></pre></div><ul>
+<li><em>%2$制定要以%d输出的是第几个参数</em></li>
+<li><em>1$制定要作为输出的长度是第几个参数</em></li>
+<li><em>width = 10,num = 5时相当于printf(&quot;%10d&quot;, 5)</em></li>
+</ul>
+<p><img src="w6-fmt-stacktrace.png" alt="w6-fmt-stacktrace"></p>
+<p><strong>例子:</strong><a href="fmt1">fmt1</a></p>
+<p>source code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setvbuf</span>(stdout,<span style="color:#ae81ff">0</span>,_IONBF,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">alarm</span>(<span style="color:#ae81ff">180</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> str[<span style="color:#ae81ff">100</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">gets</span>(str)) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">printf</span>(str);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="fmt漏洞成因">fmt漏洞成因</h2>
+<ul>
+<li><em>format string可以被攻击者的输入人以控制，而printf本身不会检查后面有几个参数</em></li>
+<li><em>使用%x会造成stack上的info leak</em></li>
+<li><em>使用$控制要leak的位置</em></li>
+</ul>
+<p><strong>PS.：</strong> <em>x64的程序使用%lx</em></p>
+<h2 id="leak-libc-base">leak libc base</h2>
+<ul>
+<li><em>程序执行起点为_start，把main作为参数传入__libc_start_main</em></li>
+<li><em>__libc_start_main会先完成初始化造作，之后call main函数</em></li>
+<li><em>main的ret addr指向libc内部，且存放在stack上的值可以用%x泄露出来</em></li>
+<li><em>leak出来的位数ec5和return会libc里的位置一致，但由于ASLR的关系使得高位随机</em></li>
+<li><em>会return的位置会在call exit前面一些</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./fmt1
+</span></span><span style="display:flex;"><span>%21$lx
+</span></span><span style="display:flex;"><span>7f0438b721e3
+</span></span></code></pre></div><h1 id="stackguardcanary">stackguard(CANARY)</h1>
+<ul>
+<li>编译器对stack overflow的一种保护机制</li>
+<li>在call函数时在stack上放的值</li>
+<li>函数return时先检查CANARY是否被修改</li>
+</ul>
+<p><img src="w6-fmt-stackguard.png" alt="w6-fmt-stackguard"></p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w6/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w5/" class="link black dim">
+        NTU STCS 2016学习笔记 0x03 ROP2
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="ret2syscall">ret2syscall</h1>
+<ul>
+<li><em>跳.plt entry</em></li>
+<li><em>函数参数直接放到接下来的stack</em></li>
+<li><em>用pop-ret处理用过的参数</em></li>
+</ul>
+<p><img src="w5-ropcall.png" alt="w5-ropcall"></p>
+<h1 id="ret2libc">ret2libc</h1>
+<ul>
+<li><em>printf,gets,puts等函数所在位置:libc.so.6</em></li>
+<li><em>直接用rop call libc 的system</em></li>
+<li><em>用条件</em>
+<ul>
+<li><em>libc版本或者fuction的offset已知</em></li>
+<li><em>ASLR开启情况</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>Dynamically Linded Elf 动态链接库相关操作</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 获取libc路径</span>
+</span></span><span style="display:flex;"><span>ldd ./binary
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看libc中的相对位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># trick 使用 | grep &#39; system@&#39;来查看想找的symbol</span>
+</span></span><span style="display:flex;"><span>readelf -s /lib32/libc.so.6 | grep <span style="color:#e6db74">&#39; system@&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 指定加载的libc位置</span>
+</span></span><span style="display:flex;"><span>LD_LIBRARY_PATH<span style="color:#f92672">=</span>./path/to/libc
+</span></span></code></pre></div><p><strong>Function Lazy Binding</strong></p>
+<p><em>library在binary执行时才加载，第一次call function时解析函数位置填入.got.plt</em></p>
+<p><strong>推算libc base addr</strong></p>
+<ul>
+<li><em>函数在libc的相对位置不变</em>
+<ul>
+<li><em>使用readelf得知__libc_start_main和system在libc的相对位置</em></li>
+</ul>
+</li>
+<li><em>使用任意输入函数print出__libc-start_main的.got内容，推算system在内存的addr</em>
+<ul>
+<li><em>用rop构造puts(__libc_start_main@got)</em></li>
+<li><em>要leak的got entry,对应的function必须已经被call过</em></li>
+</ul>
+</li>
+<li><em>前提：已有或已知远端libc.so.6版本</em></li>
+</ul>
+<p><strong>Libc Data Base</strong></p>
+<ul>
+<li>
+<p><em>已知两个function的address时可以在libcdb里找对应的版本</em></p>
+<ul>
+<li><em><del>✘网站：libcdb.com:the libc data base</del></em></li>
+<li><em>✘网站：<a href="https://libc.nullbyte.cat/">libc.nullbyte.cat</a></em></li>
+<li><em>✔使用<a href="https://github.com/lieanu/LibcSearcher">LibcSearcher</a></em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> LibcSearcher <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#第二个参数，为已泄露的实际地址,或最后12位(比如：d90)，int类型</span>
+</span></span><span style="display:flex;"><span>obj <span style="color:#f92672">=</span> LibcSearcher(<span style="color:#e6db74">&#34;fgets&#34;</span>, <span style="color:#ae81ff">0X7ff39014bd90</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;system&#34;</span>)        <span style="color:#75715e">#system 偏移</span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;str_bin_sh&#34;</span>)    <span style="color:#75715e">#/bin/sh 偏移</span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;__libc_start_main_ret&#34;</span>)  
+</span></span></code></pre></div></li>
+</ul>
+<p><strong>Leak libc base</strong>
+<em>一般leak __libc_start_main的地址，通过LibcSearcher获取system与/bin/sh的地址，再跳转回main触发溢出执行system(&rsquo;/bin/sh&rsquo;)</em></p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w5/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w4/" class="link black dim">
+        NTU STCS 2016学习笔记 0x02 ROP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="gdbserver">gdbserver</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># in bash commandline</span>
+</span></span><span style="display:flex;"><span>gdbserver 127.0.0.1:4000 ./binary <span style="color:#75715e">#break在entrypoint</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># in gdb commandline</span>
+</span></span><span style="display:flex;"><span>gdb ./binary
+</span></span><span style="display:flex;"><span>$ target remote 127.0.0.1:4000
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 搭配ncat</span>
+</span></span><span style="display:flex;"><span>ncat -vc <span style="color:#e6db74">&#39;gdbserver 127.0.0.1:4000 .binary&#39;</span> -kl 127.0.0.1 <span style="color:#ae81ff">5000</span>
+</span></span></code></pre></div><p><strong>trick</strong></p>
+<p>使用gdbscript attach pid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># .gdbinit</span>
+</span></span><span style="display:flex;"><span>set disassembly-flavor intel
+</span></span><span style="display:flex;"><span>define at
+</span></span><span style="display:flex;"><span>  shell echo attach <span style="color:#66d9ef">$(</span>pidof -s $arg0<span style="color:#66d9ef">)</span> &gt; /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>  source /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><hr>
+<h1 id="rop">rop</h1>
+<p>类型包括:ret2syscall ret2text ret2libc</p>
+<h2 id="rop2syscall">rop2syscall</h2>
+<ul>
+<li>找gadget控制syscall需要的regs(eax,ebx,ecx,edx)</li>
+<li>需要int 80</li>
+</ul>
+<p><strong>RopGadget</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#usage</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#int 80 ; ret</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary --opcode cd80c3
+</span></span></code></pre></div><blockquote>
+<p>PS:execve需要&rsquo;/bin/sh&rsquo;，且地址必须已知
+用read吧需要的字符串输入至已知地址的buffer上</p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w4/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w3/" class="link black dim">
+        NTU STCS 2016学习笔记 0x01 Intro
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h2 id="objdump">objdump</h2>
+<p>常用指令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ objdump -T binary
+</span></span><span style="display:flex;"><span>$ cat /proc/<span style="color:#e6db74">`</span>pidof binary<span style="color:#e6db74">`</span>/maps
+</span></span></code></pre></div><h2 id="readelf">readelf</h2>
+<p>分析elf binary header里的一些信息
+readelf -a | grep STACK 看能否跑shellcode</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ readelf -a ./binary | grep STACK
+</span></span><span style="display:flex;"><span>  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x10
+</span></span></code></pre></div><p><strong>trick</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ readelf -a ./binary | grep <span style="color:#e6db74">&#39; system@&#39;</span>
+</span></span><span style="display:flex;"><span>$ ldd binary
+</span></span></code></pre></div><p><strong>trick:execstack</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ execstack --h
+</span></span><span style="display:flex;"><span>Usage: execstack <span style="color:#f92672">[</span>OPTION...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>execstack -- program to query or set executable stack flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  -c, --clear-execstack      Clear executable stack flag bit
+</span></span><span style="display:flex;"><span>  -q, --query                Query executable stack flag bit
+</span></span><span style="display:flex;"><span>  -s, --set-execstack        Set executable stack flag bit
+</span></span><span style="display:flex;"><span>  -?, --help                 Give this help list
+</span></span><span style="display:flex;"><span>      --usage                Give a short usage message
+</span></span><span style="display:flex;"><span>  -V, --version              Print program version
+</span></span><span style="display:flex;"><span>Report bugs to &lt;jakub@redhat.com&gt;.
+</span></span></code></pre></div><hr>
+<h2 id="ncat">ncat</h2>
+<p>建立local service环境，因为你不会再无法debug的情况下直接对remote做事
+ncat -vc ./binary -kl 127.0.0.1 8888
+ncat -vc &lsquo;strace -e trace=read ./binary&rsquo; -kl ::1 4000</p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w3/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+    </section>
+  </div>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  Kur0's Blog 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

