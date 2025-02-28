@@ -1,13 +1,13 @@
 ---
 
-title: NTU STCS 2016学习笔记 0x01 Intro
+title: NTU STCS 2016 0x01 Intro
 date: 2020-08-23 16:49:01
-description: 栈溢出(StackOverflow)入门工具介绍
+description: StackOverflow
 cover: cover.jpg 
 tags:
 - pwn
 categories:
-- NTU STCS 2016学习笔记
+- NTU STCS 2016
 ---
 
 
@@ -18,8 +18,8 @@ categories:
 常用指令
 
 ```bash
-$ objdump -T binary
-$ cat /proc/`pidof binary`/maps
+objdump -T binary
+cat /proc/`pidof binary`/maps
 ```
 
 ## readelf
@@ -35,8 +35,8 @@ $ readelf -a ./binary | grep STACK
 **trick**
 
 ```bash
-$ readelf -a ./binary | grep ' system@'
-$ ldd binary
+readelf -a ./binary | grep ' system@'
+ldd binary
 ```
 
 **trick:execstack**
@@ -71,7 +71,7 @@ layout asm
 attach [pid]
 
 ```bash
-$ echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
 ```
 
 b,c,si,ni,fin
@@ -103,8 +103,8 @@ unsigned int alarm(unsigned int seconds){
 ```
 
 ```bash
-$ gcc hook.c -o hook.so -shared -fPIC -m32
-$ LD_PRELOAD=./hook.so ./binary
+gcc hook.c -o hook.so -shared -fPIC -m32
+LD_PRELOAD=./hook.so ./binary
 ```
 
 LD_SHOW_AUXV
@@ -180,17 +180,17 @@ e.g
 [section .data]
 global _start
 _start:
-	jmp sh
+ jmp sh
 se:
-	pop ebx
-	xor eax, eax
-	mov al, 11
-	xor ecx, ecx
-	xor edx, edx
-	int 0x80
+ pop ebx
+ xor eax, eax
+ mov al, 11
+ xor ecx, ecx
+ xor edx, edx
+ int 0x80
 sh:
-	call se
-	db '/bin/sh', 0
+ call se
+ db '/bin/sh', 0
 ```
 
 **注：使用mov eax, 0赋值时可能会出错**
@@ -220,9 +220,9 @@ $ xxd test.bin
 
 ## shellcode
 
--   不能有\\0
--   可以用call + pop的方式拿到shellcode address
--   长度不足时，如果还能输入可以make read函数
+- 不能有\\0
+- 可以用call + pop的方式拿到shellcode address
+- 长度不足时，如果还能输入可以make read函数
 
 ## alphanumeric Shellcode
 
@@ -296,7 +296,6 @@ int 0x80 = \\xcd\\x80，如何用数字做sys_call？
     7   37                      aaa    
     8   38 41 42                cmp    BYTE PTR [ecx+0x42], al
     9   39 41 42                cmp    DWORD PTR [ecx+0x42], eax
-
 
 Register赋值
 

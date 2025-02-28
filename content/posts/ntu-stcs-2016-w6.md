@@ -1,12 +1,12 @@
 ---
-title: NTU STCS 2016学习笔记 0x04 Format String
+title: NTU STCS 2016 0x04 Format String
 date: 2020-08-30 12:22:52
 cover: cover.jpg
 description: format string vulnerable exploit
 tags:
   - pwn
 categories:
-  - NTU STCS 2016学习笔记
+  - NTU STCS 2016
 ---
 
 # Format String
@@ -21,6 +21,7 @@ sprintf(buffer, "%s %d\n", str, a);
 ```
 
 ## Format String Vulnerablility
+
 - *错误的使用方式，直接将使用者的输入作为fmt使用*
 - *将printf("%s", str)，写成gets(str);printf(str);*
 - *此类错误不易发现，因为如果没有测试特殊input执行结果不变*
@@ -49,13 +50,14 @@ int main(){
   alarm(180);
   char str[100];
   while(gets(str)) {
-		printf(str);
-	}
+  printf(str);
+ }
   return 0;
 }
 ```
 
 ## fmt漏洞成因
+
 - *format string可以被攻击者的输入人以控制，而printf本身不会检查后面有几个参数*
 - *使用%x会造成stack上的info leak*
 - *使用$控制要leak的位置*
@@ -63,6 +65,7 @@ int main(){
 **PS.：** *x64的程序使用%lx*
 
 ## leak libc base
+
 - *程序执行起点为_start，把main作为参数传入__libc_start_main*
 - *__libc_start_main会先完成初始化造作，之后call main函数*
 - *main的ret addr指向libc内部，且存放在stack上的值可以用%x泄露出来*
@@ -76,6 +79,7 @@ $ ./fmt1
 ```
 
 # stackguard(CANARY)
+
 - 编译器对stack overflow的一种保护机制
 - 在call函数时在stack上放的值
 - 函数return时先检查CANARY是否被修改

