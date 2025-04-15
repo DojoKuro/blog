@@ -1,4 +1,4 @@
-baseURL = "http://dojokuro.gihub.io/"
+baseURL = "https://blog.dojokuro.xyz"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
