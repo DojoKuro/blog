@@ -1,6 +1,6 @@
 ---
 title: 主流Node包管理工具对比
-date: 2020-08-30 12:22:52
+date: 2025-07-04 03:22:52
 tags:
   - NodeJs
   - bun
