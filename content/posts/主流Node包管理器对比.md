@@ -1,6 +1,7 @@
 ---
 title: 主流Node包管理工具对比
 date: 2025-07-04 03:22:52
+description: NodeJs Package Manager
 tags:
   - NodeJs
   - bun
@@ -10,7 +11,6 @@ tags:
 categories:
   - Coding
 ---
-
 
 目前Node.js生态中主流的包管理器主要有npm、Yarn、pnpm和新兴的bun。它们各有优势，适用场景不同，以下是综合对比及选型建议：
 目前Node.js生态中主流的包管理器主要有**npm、Yarn、pnpm和新兴的bun**。它们各有优势，适用场景不同，以下是综合对比及选型建议：
